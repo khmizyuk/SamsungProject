@@ -22,13 +22,9 @@ import org.jetbrains.annotations.Nullable;
 
 public class LogInFragment extends Fragment {
 
-    //private MaterialButton signIn, logIn;
-    //private TextInputEditText email, password;
-    //private TextInputLayout passwordTextInput;
-
-    //private String getEmailText, getPasswordText;
-    private static final String correctEmail = "123";
-    private static final String correctPassword = "123";
+    public String getEmailText, getPasswordText;
+    private static final String CORRECTEMAIL = "123";
+    private static final String CORRECTPASSWORD = "123";
 
     public LogInFragment() {
     }
@@ -44,18 +40,14 @@ public class LogInFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_log_in, container, false);
 
         MaterialButton signIn, logIn;
-        //TextInputEditText email, password;
 
-        TextInputEditText email = view.findViewById(R.id.log_in_email_input);
-        TextInputEditText password = view.findViewById(R.id.log_in_password_input);
+        final TextInputEditText email = view.findViewById(R.id.log_in_email_input);
+        final TextInputEditText password = view.findViewById(R.id.log_in_password_input);
 
         TextInputLayout passwordTextInput;
 
-        //email = view.findViewById(R.id.log_in_email_input);
-        //password = view.findViewById(R.id.log_in_password_input);
-
-        //getEmailText = email.getText().toString();
-        //getPasswordText = password.getText().toString();
+        getEmailText = email.getText().toString();
+        getPasswordText = password.getText().toString();
 
         passwordTextInput = view.findViewById(R.id.log_in_password_text_input);
 
@@ -71,8 +63,9 @@ public class LogInFragment extends Fragment {
         logIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (! isPasswordValid(email.getText(), password.getText())) {
+                if (! isPasswordValid()) {
                     passwordTextInput.setError(getString(R.string.log_in_error_password));
+                    //passwordTextInput.setError();
                     //password.setText(null);
                 } else {
                     passwordTextInput.setError(null); // Clear the error
@@ -81,21 +74,11 @@ public class LogInFragment extends Fragment {
             }
         });
 
-        // Clear the error once more than 8 characters are typed.
-        /*password.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (isPasswordValid(email.getText(), password.getText())) {
-                    passwordTextInput.setError(null); //Clear the error
-                }/
-                return false;
-            }
-        });*/
         return view;
     }
 
-    private boolean isPasswordValid(@NonNull Editable checkEmail, @NonNull Editable checkPassword) {
-        return checkEmail.equals(correctEmail) && checkPassword.equals(correctPassword);
+    private boolean isPasswordValid() {
+        return ((getEmailText.equals(CORRECTEMAIL)) && (getPasswordText.equals(CORRECTPASSWORD)));
     }
 
 }
