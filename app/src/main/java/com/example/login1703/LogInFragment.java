@@ -66,8 +66,6 @@ public class LogInFragment extends Fragment {
             public void onClick(View v) {
                 if (! isPasswordValid()) {
                     passwordTextInput.setError(getString(R.string.log_in_error_password));
-                    //passwordTextInput.setError();
-                    //password.setText(null);
                 } else {
                     passwordTextInput.setError(null); // Clear the error
                     ((NavigationHost) getActivity()).navigateTo(new MainPageFragment(), false); // Navigate to the next Fragment
