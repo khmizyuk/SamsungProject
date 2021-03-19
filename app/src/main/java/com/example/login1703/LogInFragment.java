@@ -37,6 +37,7 @@ public class LogInFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_log_in, container, false);
 
         MaterialButton signIn, logIn;
