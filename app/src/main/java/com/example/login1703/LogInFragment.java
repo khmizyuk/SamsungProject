@@ -21,10 +21,8 @@ import com.google.android.material.textfield.TextInputLayout;
 import org.jetbrains.annotations.Nullable;
 
 public class LogInFragment extends Fragment {
-
-    public String getEmailText, getPasswordText;
-    private static final String CORRECTEMAIL = "123";
-    private static final String CORRECTPASSWORD = "123";
+    private static final String CORRECT_EMAIL = "khmizyuk";
+    private static final String CORRECT_PASSWORD = "1234";
 
     public LogInFragment() {
     }
@@ -40,19 +38,12 @@ public class LogInFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_log_in, container, false);
 
-        MaterialButton signIn, logIn;
+        MaterialButton signIn = view.findViewById(R.id.sign_in_button);
+        MaterialButton logIn = view.findViewById(R.id.next_button);
+        final TextInputEditText emailEditText = view.findViewById(R.id.log_in_email_input);
+        final TextInputEditText passwordEditText = view.findViewById(R.id.log_in_password_input);
+        final TextInputLayout passwordTextInput = view.findViewById(R.id.log_in_password_text_input);
 
-        final TextInputEditText email = view.findViewById(R.id.log_in_email_input);
-        final TextInputEditText password = view.findViewById(R.id.log_in_password_input);
-
-        TextInputLayout passwordTextInput;
-
-        getEmailText = email.getText().toString();
-        getPasswordText = password.getText().toString();
-
-        passwordTextInput = view.findViewById(R.id.log_in_password_text_input);
-
-        signIn = view.findViewById(R.id.sign_in_button);
         signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,12 +51,12 @@ public class LogInFragment extends Fragment {
             }
         });
 
-        logIn = view.findViewById(R.id.next_button);
         logIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (! isPasswordValid()) {
+                if (!isPasswordValid(emailEditText.getText().toString(), passwordEditText.getText().toString())) {
                     passwordTextInput.setError(getString(R.string.log_in_error_password));
+                    passwordEditText.setText(null);
                 } else {
                     passwordTextInput.setError(null); // Clear the error
                     ((NavigationHost) getActivity()).navigateTo(new MainPageFragment(), false); // Navigate to the next Fragment
@@ -76,8 +67,8 @@ public class LogInFragment extends Fragment {
         return view;
     }
 
-    private boolean isPasswordValid() {
-        return ((getEmailText.equals(CORRECTEMAIL)) && (getPasswordText.equals(CORRECTPASSWORD)));
+    private boolean isPasswordValid(@NonNull String checkEmail, @NonNull String checkPassword) {
+        return (checkEmail.equals(CORRECT_EMAIL)) && (checkPassword.equals(CORRECT_PASSWORD));
     }
 
 }

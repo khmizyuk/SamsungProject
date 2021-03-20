@@ -4,9 +4,11 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="log_in_hint_password">Пароль</string>
     <string name="log_in_hint_email">Email</string>
+    <string name="sign_in_hint_name">Имя</string>
+    <string name="sign_in_hint_last_name">Фамилия</string>
     <string name="log_in_button_sign_in">Регистрация</string>
     <string name="log_in_button_log_in">Войти</string>
     <string name="log_in_error_password">Неверный логин и/или пароль</string>
-    <string name="no_asses_to_sign_in">Регистрация новых пользователей ещё не доступна</string>
+    <string name="no_asses_to_sign_in">К сожалению, регистрация новых пользователей ещё не доступна</string>
     <string name="back">Назад</string>
 </resources>
