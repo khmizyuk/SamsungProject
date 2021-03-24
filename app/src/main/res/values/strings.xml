@@ -11,4 +11,7 @@
     <string name="log_in_error_password">Неверный логин и/или пароль</string>
     <string name="no_asses_to_sign_in">К сожалению, регистрация новых пользователей ещё не доступна</string>
     <string name="back">Назад</string>
+    <string name="sign_in_title_for_sign_in">Регистрация</string>
+    <string name="sign_in_text_for_sign_in">Для продолжения введите корректные данные</string>
+
 </resources>

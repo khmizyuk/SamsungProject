@@ -23,6 +23,32 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/icon" />
 
+        <TextView
+            android:id="@+id/sign_in_tшеду_for_sign_in"
+            android:layout_width="353dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            android:background="#FFFFFF"
+            android:text="@string/sign_in_title_for_sign_in"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/sign_in_text_for_sign_in"
+            android:layout_width="353dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center_horizontal"
+            android:background="#FFFFFF"
+            android:text="@string/sign_in_text_for_sign_in"
+            android:textSize="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/sign_in_name_text_input"
             android:layout_width="match_parent"
@@ -129,12 +155,12 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/back_button"
-            android:layout_width="wrap_content"
+            android:layout_width="353dp"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="20dp"
             android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
             android:backgroundTint="@color/black"
             android:text="@string/back"
             tools:layout_editor_absoluteX="59dp"

@@ -68,7 +68,8 @@ public class LogInFragment extends Fragment {
     }
 
     private boolean isPasswordValid(@NonNull String checkEmail, @NonNull String checkPassword) {
-        return (checkEmail.equals(CORRECT_EMAIL)) && (checkPassword.equals(CORRECT_PASSWORD));
+        //return (checkEmail.equals(CORRECT_EMAIL)) && (checkPassword.equals(CORRECT_PASSWORD));
+        return true;
     }
 
 }
