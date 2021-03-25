@@ -13,5 +13,11 @@
     <string name="back">Назад</string>
     <string name="sign_in_title_for_sign_in">Регистрация</string>
     <string name="sign_in_text_for_sign_in">Для продолжения введите корректные данные</string>
-
+    <string name="title_1">Тема 1</string>
+    <string name="title_2">Тема 2</string>
+    <string name="description_to_title_1">Описание темы 1</string>
+    <string name="description_to_title_2">Описание темы 2</string>
+    <string name="text_label_arcticles">Статьи</string>
+    <string name="text_label_map">Карта</string>
+    <string name="text_label_profile">Профиль</string>
 </resources>

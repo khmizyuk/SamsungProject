@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.widget.FrameLayout;
 
 public class MainActivity extends AppCompatActivity implements NavigationHost{
 
@@ -30,6 +31,32 @@ public class MainActivity extends AppCompatActivity implements NavigationHost{
                 getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.container, fragment);
+
+        if (addToBackstack) {
+            transaction.addToBackStack(null);
+        }
+
+        transaction.commit();
+    }
+
+    public void navigateMenu(Fragment fragment, boolean addToBackstack) {
+        FragmentTransaction transaction =
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.menu_container, fragment);
+
+        if (addToBackstack) {
+            transaction.addToBackStack(null);
+        }
+
+        transaction.commit();
+    }
+
+    public void navigateMenuAdd(Fragment fragment, boolean addToBackstack) {
+        FragmentTransaction transaction =
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .add(R.id.menu_container, fragment);
 
         if (addToBackstack) {
             transaction.addToBackStack(null);
