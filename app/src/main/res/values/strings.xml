@@ -20,4 +20,7 @@
     <string name="text_label_arcticles">Статьи</string>
     <string name="text_label_map">Карта</string>
     <string name="text_label_profile">Профиль</string>
+    <string name="choose_location">Выберите город</string>
+    <string name="choose_location_hint">Город</string>
+    <string name="next">Далее</string>
 </resources>

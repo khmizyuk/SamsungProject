@@ -2,16 +2,22 @@ package com.example.login1703;
 
 import android.os.Bundle;
 
+import androidx.annotation.DrawableRes;
+import androidx.annotation.MenuRes;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
+import com.google.android.material.bottomnavigation.BottomNavigationMenu;
+import com.google.android.material.bottomnavigation.BottomNavigationPresenter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainPageFragment extends Fragment {
@@ -28,9 +34,7 @@ public class MainPageFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_main_page, container, false);
-
-
+        View view = inflater.inflate(R.layout.fragment_main_page, container, false);;
 
         if (savedInstanceState == null) {
             ((NavigationHost) getActivity()).navigateMenuAdd(new MapFragment(), true);

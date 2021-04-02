@@ -23,7 +23,7 @@
             android:id="@+id/image_to_title_1"
             android:layout_width="match_parent"
             android:layout_height="194dp"
-            android:background="?attr/colorPrimarySurface"
+            android:background="@drawable/recycling_1"
             android:scaleType="centerCrop" />
 
         <LinearLayout
@@ -66,9 +66,10 @@
         <com.android.volley.toolbox.NetworkImageView
             android:id="@+id/image_to_title_2"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="?attr/colorPrimarySurface"
+            android:layout_height="194dp"
+            android:background="@drawable/recycling_2"
             android:scaleType="centerCrop" />
+             <!--android:background="?attr/colorPrimarySurface"-->
 
         <LinearLayout
             android:layout_width="match_parent"
