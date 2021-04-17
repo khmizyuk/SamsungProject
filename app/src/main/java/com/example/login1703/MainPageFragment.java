@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationMenu;
 import com.google.android.material.bottomnavigation.BottomNavigationPresenter;
@@ -37,7 +38,7 @@ public class MainPageFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_main_page, container, false);;
 
         if (savedInstanceState == null) {
-            ((NavigationHost) getActivity()).navigateMenuAdd(new MapFragment(), true);
+            ((NavigationHost) getActivity()).navigateMenuAdd(new com.example.login1703.MapFragment(), true);
         }
 
         BottomNavigationView navigation = (BottomNavigationView) view.findViewById(R.id.bottom_navigation);

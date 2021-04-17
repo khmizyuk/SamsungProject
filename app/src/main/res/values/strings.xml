@@ -23,4 +23,5 @@
     <string name="choose_location">Выберите город</string>
     <string name="choose_location_hint">Город</string>
     <string name="next">Далее</string>
+    <string name="go">Зарегистрироваться</string>
 </resources>
