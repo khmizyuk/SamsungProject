@@ -1,5 +1,6 @@
 package com.example.login1703;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,19 +18,21 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+//import com.google.firebase.authNewsMap.FirebaseAuth;
+//import com.google.firebase.database.DatabaseReference;
+//import com.google.firebase.database.FirebaseDatabase;
 
 import org.jetbrains.annotations.Nullable;
 
 public class LogInFragment extends Fragment {
+
     private static final String CORRECT_EMAIL = "khmizyuk";
     private static final String CORRECT_PASSWORD = "1234";
     //Button log_in_button;
-    FirebaseAuth auth; // Авторизация
-    FirebaseDatabase db; // Подключение к бд
-    DatabaseReference users; // Работа с табличками внутри бд
+    //Button sign_in_button;
+    //FirebaseAuth auth; // Авторизация
+    //FirebaseDatabase db; // Подключение к бд
+    //DatabaseReference users; // Работа с табличками внутри бд
 
     public LogInFragment() {
     }
@@ -43,40 +46,34 @@ public class LogInFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        /*sign_in_button = findViewById(R.id.sign_in_button);
-        sign_in_button =
-        log_in_button = findViewById(R.id.log_in_button);
-
-        auth = FirebaseAuth.getInstance(); // Запускаем авторизацию в бд
-        db = FirebaseDatabase.getInstance(); // Подключаемся непосредственно к бд
-        users = db.getReference("Users"); // Указываем с какой табличкой работаем
-
-        sign_in_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });*/
-
-        /////////////////////////////////////////////////////////////////////
-
         View view = inflater.inflate(R.layout.fragment_log_in, container, false);
 
-        MaterialButton signIn = view.findViewById(R.id.sign_in_button);
+        //sign_in_button = view.findViewById(R.id.sign_in_button);
+        //log_in_button = view.findViewById(R.id.log_in_button);
+
+        /*
+        auth = FirebaseAuth.getInstance(); // Запускаем авторизацию в бд
+        db = FirebaseDatabase.getInstance(); // Подключаемся непосредственно к бд
+        users = db.getReference("Users"); // Указываем с какой табличкой работаем*/
+
+
+        /////////////////////////////////////////////////////////
+
+        MaterialButton sign_in_button = view.findViewById(R.id.sign_in_button);
         MaterialButton complete_sign_in_button = view.findViewById(R.id.complete_sign_in_button);
-        MaterialButton logIn = view.findViewById(R.id.log_in_button);
+        MaterialButton log_in_button = view.findViewById(R.id.log_in_button);
         final TextInputEditText emailEditText = view.findViewById(R.id.log_in_email_input);
         final TextInputEditText passwordEditText = view.findViewById(R.id.log_in_password_input);
         final TextInputLayout passwordTextInput = view.findViewById(R.id.log_in_password_text_input);
 
-        signIn.setOnClickListener(new View.OnClickListener() {
+        sign_in_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ((NavigationHost) getActivity()).navigateTo(new SignInFragment(), true);
             }
         });
 
-        logIn.setOnClickListener(new View.OnClickListener() {
+        log_in_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!isPasswordValid(emailEditText.getText().toString(), passwordEditText.getText().toString())) {
@@ -84,6 +81,7 @@ public class LogInFragment extends Fragment {
                     passwordEditText.setText(null);
                 } else {
                     passwordTextInput.setError(null); // Clear the error
+
                     ((NavigationHost) getActivity()).navigateTo(new MainPageFragment(), false); // Navigate to the next Fragment
                 }
             }
