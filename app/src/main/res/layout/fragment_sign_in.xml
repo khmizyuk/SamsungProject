@@ -135,7 +135,8 @@
             android:layout_alignParentRight="true"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
-            android:backgroundTint="@color/black"
+            android:background="@color/hard_green"
+            android:enabled="false"
             android:text="@string/go"
             tools:layout_editor_absoluteX="59dp"
             tools:layout_editor_absoluteY="32dp" />

@@ -24,4 +24,6 @@
     <string name="choose_location_hint">Город</string>
     <string name="next">Далее</string>
     <string name="go">Зарегистрироваться</string>
+    <string name="auth_failed">Authentication failed</string>
+    <string name="have_no_account">Нет аккаунта?</string>
 </resources>
