@@ -15,14 +15,6 @@
       },
       "oauth_client": [
         {
-          "client_id": "197061651562-md0dvocfma2e3kuiguonlisi2c9n52q3.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.login",
-            "certificate_hash": "c7ab9f7db21d249efc56ee861bd9c599abd51934"
-          }
-        },
-        {
           "client_id": "197061651562-iu5li0elgve884klrdjhug78hqd1g7rm.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -52,7 +44,7 @@
       },
       "oauth_client": [
         {
-          "client_id": "197061651562-6hokjanjphprqg9ovok7taa4q246tbte.apps.googleusercontent.com",
+          "client_id": "197061651562-qcu4h6hqknv4pridhr01hes0dso9evp8.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.login1703",
@@ -89,14 +81,6 @@
       },
       "oauth_client": [
         {
-          "client_id": "197061651562-i45e71d2sovepm63238r7hrut2ld8bhg.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.google.firebase.quickstart.auth",
-            "certificate_hash": "c7ab9f7db21d249efc56ee861bd9c599abd51934"
-          }
-        },
-        {
           "client_id": "197061651562-iu5li0elgve884klrdjhug78hqd1g7rm.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -125,14 +109,6 @@
         }
       },
       "oauth_client": [
-        {
-          "client_id": "197061651562-gu7626s4u9v8mhhq7498vd4pk2cakmjq.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.google.firebase.quickstart.database",
-            "certificate_hash": "c7ab9f7db21d249efc56ee861bd9c599abd51934"
-          }
-        },
         {
           "client_id": "197061651562-iu5li0elgve884klrdjhug78hqd1g7rm.apps.googleusercontent.com",
           "client_type": 3
