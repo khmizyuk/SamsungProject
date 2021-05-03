@@ -40,7 +40,7 @@ public class MainPageFragment extends Fragment {
         if (savedInstanceState == null) {
             ((NavigationHost) getActivity()).navigateMenuAdd(new com.example.login1703.MapFragment(), true);
         }
-
+        
         BottomNavigationView navigation = (BottomNavigationView) view.findViewById(R.id.bottom_navigation);
         navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override

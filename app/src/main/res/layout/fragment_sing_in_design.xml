@@ -48,10 +48,11 @@
             android:layout_marginEnd="24dp"
             android:layout_marginRight="24dp"
             android:hint="@string/sign_in_hint_name"
-            app:errorEnabled="true"
+            app:errorEnabled="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:startIconDrawable="@drawable/ic_baseline_lock_24">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/sign_in_name_input"
@@ -71,10 +72,11 @@
             android:layout_marginEnd="24dp"
             android:layout_marginRight="24dp"
             android:hint="@string/sign_in_hint_last_name"
-            app:errorEnabled="true"
+            app:errorEnabled="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sign_in_name_text_input">
+            app:layout_constraintTop_toBottomOf="@+id/sign_in_name_text_input"
+            app:startIconDrawable="@drawable/ic_baseline_lock_24">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/sign_in_last_name_input"
@@ -94,7 +96,7 @@
             android:layout_marginEnd="24dp"
             android:layout_marginRight="24dp"
             android:hint="@string/log_in_hint_email"
-            app:errorEnabled="true"
+            app:errorEnabled="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/sign_in_last_name_text_input">
@@ -141,6 +143,20 @@
             android:text="@string/go"
             tools:layout_editor_absoluteX="59dp"
             tools:layout_editor_absoluteY="32dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/back_button"
+            style="?attr/borderlessButtonStyle"
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="30dp"
+            android:text="@string/back"
+            android:textAllCaps="false"
+            android:textColor="@color/hard_green"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/log_in_button" />
 
 
     </LinearLayout>

@@ -8,10 +8,10 @@
 
     <item
         android:id="@+id/articles"
-        android:enabled="true"
         android:checked="false"
+        android:enabled="true"
         android:icon="@drawable/articles"
-        android:title="@string/text_label_arcticles"/>
+        android:title="@string/text_label_arcticles" />
 
     <item
         android:id="@+id/profile"

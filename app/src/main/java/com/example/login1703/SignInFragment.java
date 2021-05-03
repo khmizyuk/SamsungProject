@@ -45,6 +45,14 @@ public class SignInFragment extends Fragment {
         final TextInputEditText lastnameEditText = view.findViewById(R.id.sign_in_last_name_input);
 
         MaterialButton signInButton = view.findViewById(R.id.complete_sign_in_button);
+        MaterialButton backButton = view.findViewById(R.id.back_button);
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((NavigationHost) getActivity()).navigateTo(new LogInFragment(), true);
+            }
+        });
 
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
