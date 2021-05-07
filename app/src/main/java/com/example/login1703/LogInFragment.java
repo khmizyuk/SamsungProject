@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
@@ -57,7 +58,9 @@ public class LogInFragment extends Fragment {
             public void onClick(View v) {
                 email = emailEditText.getText().toString();
                 password = passwordEditText.getText().toString();
+                FirebaseUser currentUser = mAuth.getCurrentUser();
                 signIn(email, password);
+
                 /*
                 if (!isPasswordValid(emailEditText.getText().toString(), passwordEditText.getText().toString())) {
                     passwordTextInput.setError(getString(R.string.log_in_error_password));

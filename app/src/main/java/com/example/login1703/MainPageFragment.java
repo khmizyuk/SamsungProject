@@ -20,6 +20,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationMenu;
 import com.google.android.material.bottomnavigation.BottomNavigationPresenter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainPageFragment extends Fragment {
 
@@ -62,6 +63,4 @@ public class MainPageFragment extends Fragment {
 
         return view;
     }
-
-
 }

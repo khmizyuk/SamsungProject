@@ -67,8 +67,9 @@ public class SignInFragment extends Fragment {
                     Toast.makeText(getContext(), "Not validate form.",
                             Toast.LENGTH_SHORT).show();
                     return;
-                } else
+                } else {
                     createAccount(email, password);
+                }
             }
         });
 
