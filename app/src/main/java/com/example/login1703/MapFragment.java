@@ -98,6 +98,7 @@ public class MapFragment extends Fragment {
                                         applyButton.setVisibility(View.INVISIBLE);
                                         cancelButton.setVisibility(View.INVISIBLE);
                                         floatingButton.setEnabled(true);
+                                        newProblem.setDraggable(false);
                                     }
                                 });
 
