@@ -20,13 +20,6 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints">
 
-        <com.android.volley.toolbox.NetworkImageView
-            android:id="@+id/image_to_title_1"
-            android:layout_width="match_parent"
-            android:layout_height="194dp"
-            android:background="@drawable/recycling_1"
-            android:scaleType="centerCrop" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -36,19 +29,21 @@
             android:padding="8dp">
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/title_1"
-                android:textAppearance="?attr/textAppearanceHeadline6" />
-
-            <TextView
-                android:layout_width="match_parent"
+                android:layout_width="354dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:textColor="?android:attr/textColorSecondary"
                 android:text="@string/description_to_title_1"
-                android:textAppearance="?attr/textAppearanceBody2" />
+                android:textAppearance="?attr/textAppearanceBody2"
+                android:textColor="?android:attr/textColorSecondary"
+                android:textSize="19dp" />
         </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="match_parent"
+            android:layout_height="194dp"
+            android:scrollbarSize="4dp"
+            android:src="@drawable/_85_4" />
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
