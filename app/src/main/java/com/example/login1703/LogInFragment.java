@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -14,6 +15,8 @@ import androidx.annotation.VisibleForTesting;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -22,6 +25,10 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import org.jetbrains.annotations.NotNull;
 
 public class LogInFragment extends Fragment {
 
@@ -30,6 +37,10 @@ public class LogInFragment extends Fragment {
 
     private static final String TAG = "EmailPassword";
     private FirebaseAuth mAuth;
+    private FirebaseDatabase mDataBase;
+    private DatabaseReference users;
+
+    RelativeLayout container;
 
     String email;
     String password;
@@ -39,10 +50,16 @@ public class LogInFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_log_in_design, container, false);
 
+        mDataBase = FirebaseDatabase.getInstance();
+        users = mDataBase.getReference("Users");
+        mAuth = FirebaseAuth.getInstance();
+
+        container = view.findViewById(R.id.container);
+
         MaterialButton sign_in_button = view.findViewById(R.id.sign_in_button);
         MaterialButton log_in_button = view.findViewById(R.id.log_in_button);
 
-        TextInputEditText emailEditText = view.findViewById(R.id.log_in_email_input);
+        TextInputEditText emailEditText = view.findViewById(R.id.message);
         TextInputEditText passwordEditText = view.findViewById(R.id.log_in_password_input);
         TextInputLayout passwordTextInput = view.findViewById(R.id.log_in_password_text_input);
 
@@ -109,14 +126,28 @@ public class LogInFragment extends Fragment {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(getContext(), "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
+                            Snackbar.make(container, "Authentication failed. "+task.getException(), Snackbar.LENGTH_SHORT).show();
                         }
 
                         if (!task.isSuccessful()) { }
                         hideProgressBar();
                     }
                 });
+
+        /*mAuth.signInWithEmailAndPassword(email, password)
+                .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                    @Override
+                    public void onSuccess(AuthResult authResult) {
+                        Log.d(TAG, "signInWithEmail:success");
+                        ((NavigationHost) getActivity()).navigateTo(new MainPageFragment(), false);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull @NotNull Exception e) {
+                Snackbar.make(container, "Authentication failed. "+e.getMessage(), Snackbar.LENGTH_SHORT).show();
+            }
+        });*/
     }
 
     @VisibleForTesting

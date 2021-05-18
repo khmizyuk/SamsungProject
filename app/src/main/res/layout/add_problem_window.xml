@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:hint="@string/add_problem_window_hint_title"
+        app:hintTextColor="@color/hard_green"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/message"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:background="@android:color/transparent"
+            android:gravity="start|top|left"
+            android:inputType="textMultiLine|text"
+            android:singleLine="false"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        app:singleSelection="true">
+
+        <Button
+            android:id="@+id/traffic_light"
+            style="@style/Widget.App.Button.OutlinedButton.IconOnly"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:icon="@drawable/ic_baseline_traffic_24" />
+
+        <Button
+            android:id="@+id/bin"
+            style="@style/Widget.App.Button.OutlinedButton.IconOnly"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:icon="@drawable/ic_baseline_delete_forever_24" />
+
+        <Button
+            android:id="@+id/another"
+            style="@style/Widget.App.Button.OutlinedButton.IconOnly"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:icon="@drawable/ic_baseline_more_horiz_24" />
+
+
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+</LinearLayout>

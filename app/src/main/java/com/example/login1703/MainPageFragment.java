@@ -39,7 +39,7 @@ public class MainPageFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_main_page, container, false);;
 
         if (savedInstanceState == null) {
-            ((NavigationHost) getActivity()).navigateMenuAdd(new com.example.login1703.MapFragment(), true);
+            ((NavigationHost) getActivity()).navigateMenuAdd(new com.example.login1703.MapFragmentDesign(), true);
         }
         
         BottomNavigationView navigation = (BottomNavigationView) view.findViewById(R.id.bottom_navigation);
@@ -51,7 +51,7 @@ public class MainPageFragment extends Fragment {
                         ((NavigationHost) getActivity()).navigateMenu(new ArticlesFragment(), true);
                         break;
                     case R.id.map:
-                        ((NavigationHost) getActivity()).navigateMenu(new MapFragment(), true);
+                        ((NavigationHost) getActivity()).navigateMenu(new MapFragmentDesign(), true);
                         break;
                     case R.id.profile:
                         ((NavigationHost) getActivity()).navigateMenu(new ProfileFragment(), true);

@@ -33,6 +33,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import kotlin.SinceKotlin;
+
 public class MapFragment extends Fragment {
     FusedLocationProviderClient client;
     SupportMapFragment supportMapFragment;
@@ -77,10 +79,12 @@ public class MapFragment extends Fragment {
                             public void onMapReady(GoogleMap googleMap) {
                                 LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
                                 //MarkerOptions newProblem = new MarkerOptions().position(latLng);//.icon(BitmapDescriptorFactory.fromResource(R.drawable.icon));
-                                Marker newProblem = googleMap.addMarker(new MarkerOptions().position(latLng).draggable(true));
+                                Marker newProblem = googleMap.addMarker(new MarkerOptions()
+                                        .position(latLng)
+                                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
+                                        .draggable(true));
                                 googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
                                 //googleMap.addMarker(newProblem);
-                                newProblem.setVisible(true);
 
                                 cancelButton.setOnClickListener(new View.OnClickListener() {
                                     @Override
@@ -108,6 +112,7 @@ public class MapFragment extends Fragment {
                 });
             }
         });
+
 
 
         return view;
