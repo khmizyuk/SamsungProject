@@ -3,6 +3,7 @@ package com.example.login1703;
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.location.LocationListener;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
@@ -20,6 +21,7 @@ import android.widget.CheckBox;
 
 import androidx.annotation.NonNull;
 
+import com.example.login1703.Models.FirebaseMarkerDetails;
 import com.example.login1703.Models.Markers;
 import com.example.login1703.Models.User;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -39,21 +41,36 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textview.MaterialTextView;
+import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.Firestore;
+import com.google.cloud.firestore.WriteResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.lang.ref.Reference;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class MapFragmentDesign extends Fragment {
+
     private static final String TAG = "EmailPassword";
+
     FusedLocationProviderClient client;
     SupportMapFragment supportMapFragment;
 
     private DatabaseReference mDataBase;
+
+    Firestore db;
+
+    Marker currentMarker;
 
     boolean selectButton = false;
 
@@ -119,17 +136,8 @@ public class MapFragmentDesign extends Fragment {
                                         //marker.showInfoWindow();
                                         //showMarkerInfoWindow();
 
-                                        /*if ((user.getEmail()).equals("sergey.khmizyuk@gmail.com"))
-                                        //showMarkerInfoWindowAdmin(marker);
-                                        //else
-                                        //showMarkerInfoWindowUser(marker)*/
                                         FirebaseUser user = mAuth.getCurrentUser();
-                                        /*for (String adminEmail : adminArrayList)
-                                            if (user.getEmail().equals(adminEmail)){
-                                                showMarkerInfoWindowAdmin(marker);
-                                                break;
-                                            }
-                                                showMarkerInfoWindowUser(marker);*/
+
                                         boolean isAdmin = false;
                                         for (String adminEmail : adminArrayList)
                                             if (user.getEmail().equals(adminEmail)) {
@@ -140,17 +148,16 @@ public class MapFragmentDesign extends Fragment {
                                             showMarkerInfoWindowAdmin(marker);
                                         else
                                             showMarkerInfoWindowUser(marker);
+
                                         return false;
                                     }
                                 });
 
                                 LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-                                double latitude = location.getLatitude();
-                                double longitude = location.getLongitude();
+                                double currentLatitude = location.getLatitude();
+                                double currentLongitude = location.getLongitude();
                                 //MarkerOptions newProblem = new MarkerOptions().position(latLng);//.icon(BitmapDescriptorFactory.fromResource(R.drawable.icon));
-                                Marker newProblem = googleMap.addMarker(new MarkerOptions()
-                                        .position(latLng)
-                                        .draggable(true));
+                                Marker newProblem = googleMap.addMarker(new MarkerOptions().position(latLng));
                                 googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
                                 //googleMap.addMarker(newProblem);
 
@@ -173,7 +180,7 @@ public class MapFragmentDesign extends Fragment {
                                         newProblem.setDraggable(false);
 
                                         //показ всплывающего окна
-                                        showAddProblemWindow(newProblem, latitude, longitude);
+                                        showAddProblemWindow(newProblem, currentLatitude, currentLongitude);
                                     }
                                 });
 
@@ -186,6 +193,8 @@ public class MapFragmentDesign extends Fragment {
 
         return view;
     }
+
+
 
     private void showMarkerInfoWindowUser(Marker marker) {
         AlertDialog.Builder window = new AlertDialog.Builder(getContext());
@@ -225,6 +234,24 @@ public class MapFragmentDesign extends Fragment {
             public void onClick(View v) {
                 if (checkBox1.isChecked() && checkBox2.isChecked()) {
                     marker.remove();
+                    //TODO delete
+
+                    /*FirebaseDatabase.getInstance().getReference().orderByChild("id").equalTo(marker.getTitle()).addListenerForSingleValueEvent(
+                            new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    for (DataSnapshot child: dataSnapshot.getChildren()) {
+                                        child.getRef().removeValue();
+
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+                                    Log.w("TodoApp", "getUser:onCancelled", databaseError.toException());
+                                }
+                            });*/
+
                 }
             }
         });
@@ -313,12 +340,28 @@ public class MapFragmentDesign extends Fragment {
 
                     marker.setSnippet(inputMessage);
 
-                    mDataBase.child("markers").child(FirebaseAuth.getInstance().getUid()).setValue(
+                    String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZqwertyuiopasdfghjklzxcvbnm1234567890";
+                    int length = 10;
+                    Random random = new Random();
+                    StringBuilder id = new StringBuilder(length);
+                    for (int n=0; n<4; n++) {
+                        for (int i = 0; i < length; i++)
+                            id.append(characters.charAt(random.nextInt(characters.length())));
+                        id.append("-");
+                    }
+                    id.delete(id.length()-1,id.length());
+
+                    marker.setTitle(String.valueOf(id));
+
+                    //String pythKey = FirebaseDatabase.getInstance().getReference().child("markers").push().getKey();
+
+                    /*FirebaseDatabase.getInstance().getReference().child("markers").push().setValue(
                             new Markers(
                                     inputMessage,
-                                    latitude,
-                                    longitude,
-                                    type
+                                    marker.getPosition().latitude,
+                                    marker.getPosition().longitude,
+                                    type,
+                                    marker.getTitle()
                             )
                     ).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
@@ -330,8 +373,37 @@ public class MapFragmentDesign extends Fragment {
                         public void onFailure(@NonNull @NotNull Exception e) {
                             Log.d(TAG, "addMarkerToDatabase:failure. "+e);
                         }
-                    });
+                    });*/
 
+                    /*FirebaseDatabase.getInstance().getReference().child(pythKey).setValue(
+                            new Markers(
+                                    inputMessage,
+                                    marker.getPosition().latitude,
+                                    marker.getPosition().longitude,
+                                    type,
+                                    marker.getTitle()
+                            )
+                    );*/
+
+                    /*FirebaseDatabase.getInstance().getReference().orderByChild("id").equalTo(marker.getTitle()).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                        }
+                    });*/
+
+                    db.collection("markers").document(marker.getTitle()).set(new Markers(
+                            inputMessage,
+                            marker.getPosition().latitude,
+                            marker.getPosition().longitude,
+                            type,
+                            marker.getTitle()
+                    ));
 
                     dialog.dismiss();
 
@@ -374,7 +446,13 @@ public class MapFragmentDesign extends Fragment {
         }
     }
 
-    public void createMarker() {
-
-    }
+//    @Override
+//    public void onLocationChanged(@NonNull Location location) {
+//        LatLng startPosition = new LatLng(location.getLatitude(), location.getLongitude());;
+//        if (currentMarker==null){
+//            Marker newProblem = googleMap.addMarker(new MarkerOptions()
+//                    .position(latLng)
+//                    .draggable(false));
+//        }
+//    }
 }
