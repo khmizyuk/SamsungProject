@@ -29,8 +29,10 @@
             android:padding="8dp">
 
             <TextView
+
                 android:layout_width="354dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginTop="8dp"
                 android:text="@string/description_to_title_1"
                 android:textAppearance="?attr/textAppearanceBody2"
@@ -59,12 +61,6 @@
         app:layout_constraintTop_toBottomOf="@+id/title_1"
         tools:ignore="MissingConstraints">
 
-        <com.android.volley.toolbox.NetworkImageView
-            android:id="@+id/image_to_title_2"
-            android:layout_width="match_parent"
-            android:layout_height="194dp"
-            android:background="@drawable/recycling_2"
-            android:scaleType="centerCrop" />
         <!--android:background="?attr/colorPrimarySurface"-->
 
         <LinearLayout
@@ -76,19 +72,23 @@
             android:padding="8dp">
 
             <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/textView22"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/title_2"
-                android:textAppearance="?attr/textAppearanceHeadline6" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginTop="8dp"
+                android:text="@string/title_100"
+                android:textAppearance="?attr/textAppearanceBody2"
                 android:textColor="?android:attr/textColorSecondary"
-                android:text="@string/description_to_title_2"
-                android:textAppearance="?attr/textAppearanceBody2" />
+                android:textSize="19sp" />
         </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imageView9"
+            android:layout_width="match_parent"
+            android:layout_height="187dp"
+            android:src="@drawable/__" />
+
     </com.google.android.material.card.MaterialCardView>
 
 
