@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.login1703.Models.User;
@@ -75,7 +76,9 @@ public class ProfileFragment extends Fragment {
         lastnameField.setText(lastname);
 
         MaterialButton logOutButton = view.findViewById(R.id.log_out);
-        logOutButton.setOnClickListener(new View.OnClickListener() {
+        ImageView logOutImage = view.findViewById(R.id.log_out_image);
+
+        logOutImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mAuth.signOut();

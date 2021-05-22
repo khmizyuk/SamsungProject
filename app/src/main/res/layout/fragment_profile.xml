@@ -7,17 +7,37 @@
     android:background="@drawable/gradient_background"
     tools:context=".ProfileFragment">
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/userEmailInfo"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:text=""
-        android:textSize="15dp"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/userEmailInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:text=""
+            android:textSize="15dp"
+            android:layout_gravity="center_vertical"
+            tools:layout_editor_absoluteX="184dp"
+            tools:layout_editor_absoluteY="16dp" />
+
+        <ImageView
+            android:id="@+id/log_out_image"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="10dp"
+            app:srcCompat="@drawable/ic_round_cancel_24"
+            tools:layout_editor_absoluteX="263dp"
+            tools:layout_editor_absoluteY="70dp" />
+
+    </LinearLayout>
+
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/firstname"
@@ -45,6 +65,8 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/log_out"
+        android:enabled="false"
+        android:visibility="invisible"
         android:layout_width="353dp"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
