@@ -41,9 +41,6 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textview.MaterialTextView;
-import com.google.api.core.ApiFuture;
-import com.google.cloud.firestore.Firestore;
-import com.google.cloud.firestore.WriteResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -57,6 +54,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.lang.ref.Reference;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class MapFragmentDesign extends Fragment {
@@ -67,8 +65,6 @@ public class MapFragmentDesign extends Fragment {
     SupportMapFragment supportMapFragment;
 
     private DatabaseReference mDataBase;
-
-    Firestore db;
 
     Marker currentMarker;
 
@@ -104,8 +100,115 @@ public class MapFragmentDesign extends Fragment {
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             getCurrentLocation();
         } else {
-            ActivityCompat.requestPermissions(getActivity() ,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
         }
+
+        mDataBase.child("markers").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Log.i("GetFrom", "ok");
+                for (DataSnapshot child: snapshot.getChildren()) {
+                    Markers marker = child.getValue(Markers.class);
+                    LatLng latLng = new LatLng(marker.getLatitude(), marker.getLongitude());
+                    client = LocationServices.getFusedLocationProviderClient(getContext());
+                    if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        return;
+                    }
+                    Task<Location> task = client.getLastLocation();
+                    task.addOnSuccessListener(new OnSuccessListener<Location>() {
+                        @Override
+                        public void onSuccess(Location location) {
+                            Log.i("GetFrom", "ok");
+                            supportMapFragment.getMapAsync(new OnMapReadyCallback() {
+                                @Override
+                                public void onMapReady(GoogleMap googleMap) {
+                                    Log.i("GetFrom", "ok");
+                                    Marker newProblem = googleMap.addMarker(new MarkerOptions().position(latLng).title(marker.getId()).snippet(marker.getSnippet()));
+
+                                    googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                                        @Override
+                                        public boolean onMarkerClick(Marker marker) {
+                                            //marker.showInfoWindow();
+                                            //marker.hideInfoWindow();
+
+                                            FirebaseUser user = mAuth.getCurrentUser();
+
+                                            boolean isAdmin = false;
+                                            for (String adminEmail : adminArrayList)
+                                                if (user.getEmail().equals(adminEmail)) {
+                                                    isAdmin = true;
+                                                    break;
+                                                }
+                                            if (isAdmin && marker.getAlpha()==1.0f)
+                                                showMarkerInfoWindowAdmin(marker);
+                                            else if (!isAdmin && marker.getAlpha()==1.0f)
+                                                showMarkerInfoWindowUser(marker);
+
+                                            return false;
+                                        }
+                                    });
+
+                                }
+                            });
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull @NotNull Exception e) {
+                            Log.i("GetFrom", e.toString());
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+                Log.i("GetFrom", error.toString());
+            }
+        });
+
+        /*mDataBase.child("markers").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                //if (dataSnapshot==null) return;
+                for (DataSnapshot postSnapShot: dataSnapshot.getChildren()) {
+
+                    mDataBase.child("markers").child(postSnapShot.getKey()).get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+                        @Override
+                        public void onSuccess(DataSnapshot dataSnapshot) {
+                            Markers marker = dataSnapshot.getValue(Markers.class);
+                            LatLng latLng = new LatLng(marker.getLatitude(), marker.getLongitude());
+                            client = LocationServices.getFusedLocationProviderClient(getContext());
+                            if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                                return;
+                            }
+                            Task<Location> task = client.getLastLocation();
+                            task.addOnSuccessListener(new OnSuccessListener<Location>() {
+                                @Override
+                                public void onSuccess(Location location) {
+                                    supportMapFragment.getMapAsync(new OnMapReadyCallback() {
+                                        @Override
+                                        public void onMapReady(GoogleMap googleMap) {
+                                            Marker newProblem = googleMap.addMarker(new MarkerOptions().position(latLng).title(marker.getId()).snippet(marker.getSnippet()));
+                                        }
+                                    });
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull @NotNull Exception e) {
+                                    Log.i()
+                                }
+                            });
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.i("GetFromDatabase", databaseError.toString());
+            }
+        });*/
 
         nextButton = view.findViewById(R.id.apply_button);
         cancelButton = view.findViewById(R.id.cancel_button);
@@ -130,34 +233,13 @@ public class MapFragmentDesign extends Fragment {
                             @Override
                             public void onMapReady(GoogleMap googleMap) {
 
-                                googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-                                    @Override
-                                    public boolean onMarkerClick(Marker marker) {
-                                        //marker.showInfoWindow();
-                                        //showMarkerInfoWindow();
 
-                                        FirebaseUser user = mAuth.getCurrentUser();
-
-                                        boolean isAdmin = false;
-                                        for (String adminEmail : adminArrayList)
-                                            if (user.getEmail().equals(adminEmail)) {
-                                                isAdmin = true;
-                                                break;
-                                            }
-                                        if (isAdmin)
-                                            showMarkerInfoWindowAdmin(marker);
-                                        else
-                                            showMarkerInfoWindowUser(marker);
-
-                                        return false;
-                                    }
-                                });
 
                                 LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
                                 double currentLatitude = location.getLatitude();
                                 double currentLongitude = location.getLongitude();
                                 //MarkerOptions newProblem = new MarkerOptions().position(latLng);//.icon(BitmapDescriptorFactory.fromResource(R.drawable.icon));
-                                Marker newProblem = googleMap.addMarker(new MarkerOptions().position(latLng));
+                                Marker newProblem = googleMap.addMarker(new MarkerOptions().position(latLng).alpha(0.5f));
                                 googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
                                 //googleMap.addMarker(newProblem);
 
@@ -193,7 +275,6 @@ public class MapFragmentDesign extends Fragment {
 
         return view;
     }
-
 
 
     private void showMarkerInfoWindowUser(Marker marker) {
@@ -252,6 +333,8 @@ public class MapFragmentDesign extends Fragment {
                                 }
                             });*/
 
+                    mDataBase.child("markers").child(marker.getTitle()).removeValue();
+                    ((NavigationHost) getActivity()).navigateTo(new MainPageFragment(), false);
                 }
             }
         });
@@ -323,14 +406,13 @@ public class MapFragmentDesign extends Fragment {
         window.setPositiveButton("Добавить метку", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if ((TextUtils.isEmpty(message.getText().toString())) || (!selectButton)){
+                if ((TextUtils.isEmpty(message.getText().toString())) || (!selectButton)) {
                     //TODO обработка ошибки пустых полей
                     floatingButton.setVisibility(View.VISIBLE);
                     floatingButton.setEnabled(true);
                     marker.remove();
                     dialog.dismiss();
-                }
-                else {
+                } else {
                     nextButton.setVisibility(View.INVISIBLE);
                     cancelButton.setVisibility(View.INVISIBLE);
                     floatingButton.setVisibility(View.VISIBLE);
@@ -339,8 +421,9 @@ public class MapFragmentDesign extends Fragment {
                     String inputMessage = message.getText().toString();
 
                     marker.setSnippet(inputMessage);
+                    marker.setAlpha(1.0f);
 
-                    String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZqwertyuiopasdfghjklzxcvbnm1234567890";
+                    /*String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZqwertyuiopasdfghjklzxcvbnm1234567890";
                     int length = 10;
                     Random random = new Random();
                     StringBuilder id = new StringBuilder(length);
@@ -349,13 +432,34 @@ public class MapFragmentDesign extends Fragment {
                             id.append(characters.charAt(random.nextInt(characters.length())));
                         id.append("-");
                     }
-                    id.delete(id.length()-1,id.length());
-
-                    marker.setTitle(String.valueOf(id));
+                    id.delete(id.length()-1,id.length());*/
 
                     //String pythKey = FirebaseDatabase.getInstance().getReference().child("markers").push().getKey();
 
-                    /*FirebaseDatabase.getInstance().getReference().child("markers").push().setValue(
+                    DatabaseReference ref = mDataBase.child("markers").push();
+                    String pathKey = ref.getKey();
+                    marker.setTitle(pathKey);
+                    ref.setValue(new Markers(
+                            inputMessage,
+                            marker.getPosition().latitude,
+                            marker.getPosition().longitude,
+                            type,
+                            marker.getTitle()
+                    )).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Log.d(TAG, "addMarkerToDatabase:success");
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull @NotNull Exception e) {
+                            Log.d(TAG, "addMarkerToDatabase:failure. " + e);
+                        }
+                    });
+
+                    ((NavigationHost) getActivity()).navigateTo(new MainPageFragment(), false);
+
+                    /*mDataBase.child("markers").push().setValue(
                             new Markers(
                                     inputMessage,
                                     marker.getPosition().latitude,
@@ -397,14 +501,6 @@ public class MapFragmentDesign extends Fragment {
                         }
                     });*/
 
-                    db.collection("markers").document(marker.getTitle()).set(new Markers(
-                            inputMessage,
-                            marker.getPosition().latitude,
-                            marker.getPosition().longitude,
-                            type,
-                            marker.getTitle()
-                    ));
-
                     dialog.dismiss();
 
                     selectButton = false;
@@ -440,19 +536,53 @@ public class MapFragmentDesign extends Fragment {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if(requestCode == 44) {
-            if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED);
+        if (requestCode == 44) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) ;
             getCurrentLocation();
         }
     }
 
-//    @Override
-//    public void onLocationChanged(@NonNull Location location) {
-//        LatLng startPosition = new LatLng(location.getLatitude(), location.getLongitude());;
-//        if (currentMarker==null){
-//            Marker newProblem = googleMap.addMarker(new MarkerOptions()
-//                    .position(latLng)
-//                    .draggable(false));
-//        }
-//    }
+    /*@Override
+    public void onLocationChanged(@NonNull Location location) {
+        LatLng startPosition = new LatLng(location.getLatitude(), location.getLongitude());;
+        if (currentMarker==null){
+            Marker newProblem = googleMap.addMarker(new MarkerOptions()
+                    .position(latLng)
+                    .draggable(false));
+        }
+    }*/
+
+    /*private void addPostEventListener(DatabaseReference mPostReference) {
+        client = LocationServices.getFusedLocationProviderClient(getContext());
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        Task<Location> task = client.getLastLocation();
+        task.addOnSuccessListener(new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                supportMapFragment.getMapAsync(new OnMapReadyCallback() {
+                    @Override
+                    public void onMapReady(GoogleMap googleMap) {
+                        ValueEventListener postListener = new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                // Get Markers object and use the values to update the UI
+                                Markers markerForCreate = dataSnapshot.getValue(Markers.class);
+                                LatLng latLng = new LatLng(markerForCreate.getLatitude(), markerForCreate.getLongitude());
+                                Marker marker = googleMap.addMarker(new MarkerOptions().position(latLng).snippet(markerForCreate.getSnippet()).title(markerForCreate.getId()));
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                                // Getting Post failed, log a message
+                                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+                            }
+                        };
+                        mPostReference.addValueEventListener(postListener);
+                    }
+                });
+            }
+        });
+    }*/
 }

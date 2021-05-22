@@ -32,9 +32,6 @@ import org.jetbrains.annotations.NotNull;
 
 public class LogInFragment extends Fragment {
 
-    //private static final String CORRECT_EMAIL = "khmizyuk";
-    //private static final String CORRECT_PASSWORD = "1234";
-
     private static final String TAG = "EmailPassword";
     private FirebaseAuth mAuth;
     private FirebaseDatabase mDataBase;
@@ -107,7 +104,7 @@ public class LogInFragment extends Fragment {
         Log.d(TAG, "signIn:" + email);
 
         if (!validateForm()) {
-            Toast.makeText(getContext(), "Authentication failed.",
+            Toast.makeText(getContext(), "Authentication failed: not validate form.",
                     Toast.LENGTH_SHORT).show();
             return;
         }
@@ -189,9 +186,9 @@ public class LogInFragment extends Fragment {
         hideProgressBar();
     }
 
-    private boolean isPasswordValid(@NonNull String checkEmail, @NonNull String checkPassword) {
+    /*private boolean isPasswordValid(@NonNull String checkEmail, @NonNull String checkPassword) {
         //return (checkEmail.equals(CORRECT_EMAIL)) && (checkPassword.equals(CORRECT_PASSWORD));
         return true;
-    }
+    }*/
 }
 

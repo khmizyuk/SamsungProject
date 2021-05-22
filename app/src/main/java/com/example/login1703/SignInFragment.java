@@ -15,6 +15,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.example.login1703.Models.Markers;
 import com.example.login1703.Models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -106,38 +107,58 @@ public class SignInFragment extends Fragment {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "createUserWithEmail:success");
                             //sendEmailVerification();
-                            //FirebaseUser user = mAuth.getCurrentUser();
+                            FirebaseUser user = mAuth.getCurrentUser();
                             Toast.makeText(getContext(), "Your account is created.",
                                     Toast.LENGTH_LONG).show();
-                            ((NavigationHost) getActivity()).navigateTo(new MainPageFragment(), true);
-//
-//                            User newUser = new User();
-//                            newUser.setEmail(email);
-//                            newUser.setLastName(lastName);
-//                            newUser.setFirstName(firstName);
-//                            newUser.setId(FirebaseAuth.getInstance().getCurrentUser().getUid());
-//
-//                            users.push().setValue(newUser);
+                            ((NavigationHost) getActivity()).navigateTo(new MainPageFragment(), false);
 
-//                            mDataBase.child("markers").child(FirebaseAuth.getInstance().getUid()).setValue(
-//                                    new User(
-//                                            firstName,
-//                                            lastName,
-//                                            FirebaseAuth.getInstance().getCurrentUser().getEmail(),
-//                                            FirebaseAuth.getInstance().getCurrentUser().getUid(),
-//                                            0
-//                                    )
-//                            ).addOnSuccessListener(new OnSuccessListener<Void>() {
-//                                @Override
-//                                public void onSuccess(Void unused) {
-//                                    Log.d(TAG, "addUserToDatabase:success");
-//                                }
-//                            }).addOnFailureListener(new OnFailureListener() {
-//                                @Override
-//                                public void onFailure(@NonNull @NotNull Exception e) {
-//                                    Log.d(TAG, "addUserToDatabase:failure."+e);
-//                                }
-//                            });
+                            DatabaseReference ref = mDataBase.child("users").push();
+                            String pathKey = ref.getKey();
+                            ref.setValue(new User(
+                                    firstName,
+                                    lastName,
+                                    email,
+                                    pathKey,
+                                    0
+                            )).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+                                    Log.d(TAG, "addUserToDatabase:success");
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull @NotNull Exception e) {
+                                    Log.d(TAG, "addUserToDatabase:failure. " + e);
+                                }
+                            });
+
+                            /*User newUser = new User();
+                            newUser.setEmail(email);
+                            newUser.setLastName(lastName);
+                            newUser.setFirstName(firstName);
+                            newUser.setId(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+                            users.push().setValue(newUser);
+
+                            mDataBase.child("markers").child(FirebaseAuth.getInstance().getUid()).setValue(
+                                    new User(
+                                            firstName,
+                                            lastName,
+                                            FirebaseAuth.getInstance().getCurrentUser().getEmail(),
+                                            FirebaseAuth.getInstance().getCurrentUser().getUid(),
+                                            0
+                                    )
+                            ).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+                                    Log.d(TAG, "addUserToDatabase:success");
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull @NotNull Exception e) {
+                                    Log.d(TAG, "addUserToDatabase:failure."+e);
+                                }
+                            });*/
 
                         } else {
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
@@ -145,7 +166,6 @@ public class SignInFragment extends Fragment {
                                     Toast.LENGTH_SHORT).show();
                             hideProgressBar();
                         }
-
                         hideProgressBar();
                     }
                 });
