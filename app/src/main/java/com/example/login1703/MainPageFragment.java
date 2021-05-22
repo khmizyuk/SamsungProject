@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -41,21 +42,20 @@ public class MainPageFragment extends Fragment {
         if (savedInstanceState == null) {
             ((NavigationHost) getActivity()).navigateMenuAdd(new com.example.login1703.MapFragmentDesign(), true);
         }
-        
         BottomNavigationView navigation = (BottomNavigationView) view.findViewById(R.id.bottom_navigation);
         navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.articles:
-                        ((NavigationHost) getActivity()).navigateMenu(new ArticlesFragment(), true);
-                        break;
+                        ((NavigationHost) getActivity()).navigateMenu(new ArticlesFragment(), false);
+                        return true;
                     case R.id.map:
-                        ((NavigationHost) getActivity()).navigateMenu(new MapFragmentDesign(), true);
-                        break;
+                        ((NavigationHost) getActivity()).navigateMenu(new MapFragmentDesign(), false);
+                        return true;
                     case R.id.profile:
-                        ((NavigationHost) getActivity()).navigateMenu(new ProfileFragment(), true);
-                        break;
+                        ((NavigationHost) getActivity()).navigateMenu(new ProfileFragment(), false);
+                        return true;
                 }
                 return false;
             }

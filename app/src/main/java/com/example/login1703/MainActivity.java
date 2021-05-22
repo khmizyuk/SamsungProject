@@ -20,7 +20,10 @@ public class MainActivity extends AppCompatActivity implements NavigationHost{
 
     public static final String KEY = "key";
 
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

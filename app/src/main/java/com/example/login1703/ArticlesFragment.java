@@ -32,14 +32,14 @@ public class ArticlesFragment extends Fragment {
         card_title_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((NavigationHost) getActivity()).navigateTo(new FirstTitleFragment(), true);
+                ((NavigationHost) getActivity()).navigateMenu(new FirstTitleFragment(), true);
             }
         });
 
         card_title_2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((NavigationHost) getActivity()).navigateTo(new SecondTitleFragment(), true);
+                ((NavigationHost) getActivity()).navigateMenu(new SecondTitleFragment(), true);
             }
         });
         return view;
