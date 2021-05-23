@@ -10,7 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/top_title"
-        android:textSize="20dp"
+        android:textSize="15dp"
+        android:textStyle="bold"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="10dp"/>
@@ -23,7 +24,7 @@
         android:textSize="15dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="2dp"/>
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/emailInfo"
@@ -33,14 +34,15 @@
         android:textSize="15dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="2dp"/>
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/deleteTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/delete_marker_title"
-        android:textSize="20dp"
+        android:textSize="15dp"
+        android:textStyle="bold"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="10dp"/>
@@ -53,7 +55,7 @@
         android:textSize="15dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginTop="5dp"/>
+        android:layout_marginTop="2dp"/>
 
     <CheckBox
         android:id="@+id/checkBox1"

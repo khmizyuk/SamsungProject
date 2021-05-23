@@ -112,6 +112,8 @@ public class MapFragmentDesign extends Fragment {
 
                     String getSnippet = marker.getSnippet();
                     String[] splitArray = getSnippet.split("\n");
+                    //for (String s: splitArray)
+                        //Log.i("pppppp", "splitArrayFor: "+s);
 
                     LatLng latLng = new LatLng(marker.getLatitude(), marker.getLongitude());
                     client = LocationServices.getFusedLocationProviderClient(getContext());
@@ -128,7 +130,7 @@ public class MapFragmentDesign extends Fragment {
                                 public void onMapReady(GoogleMap googleMap) {
                                     Log.i("GetFrom", "ok");
 
-                                    Marker newProblem = googleMap.addMarker(new MarkerOptions().position(latLng).snippet(splitArray[1]));
+                                    Marker newProblem = googleMap.addMarker(new MarkerOptions().position(latLng).snippet(marker.getSnippet()));
 
                                     googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                                         @Override
@@ -288,9 +290,8 @@ public class MapFragmentDesign extends Fragment {
 
         String getSnippet = marker.getSnippet();
         String[] splitArray = getSnippet.split("\n");
-
         for (String s: splitArray)
-            Log.i("pppppp", s);
+            Log.i("pppppp", "splitArrayFor: "+s);
 
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View showMarkerInfoWindowUser = inflater.inflate(R.layout.show_marker_info_window_user, null);
@@ -315,6 +316,8 @@ public class MapFragmentDesign extends Fragment {
 
         String getSnippet = marker.getSnippet();
         String[] splitArray = getSnippet.split("\n");
+        for (String s: splitArray)
+            Log.i("pppppp", "splitArrayFor: "+s);
 
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View showMarkerInfoWindowAdmin = inflater.inflate(R.layout.show_marker_info_window_admin, null);
@@ -360,7 +363,8 @@ public class MapFragmentDesign extends Fragment {
         markerInfo.setText(splitArray[1]);
 
         MaterialTextView emailInfo = showMarkerInfoWindowAdmin.findViewById(R.id.emailInfo);
-        emailInfo.setText("Автор: "+splitArray[2]);
+        String info = "Автор: "+splitArray[2];
+        emailInfo.setText(info);
 
         window.setNegativeButton("Закрыть", new DialogInterface.OnClickListener() {
             @Override
