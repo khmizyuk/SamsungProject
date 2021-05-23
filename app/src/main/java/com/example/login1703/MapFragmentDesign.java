@@ -109,6 +109,10 @@ public class MapFragmentDesign extends Fragment {
                 Log.i("GetFrom", "ok");
                 for (DataSnapshot child: snapshot.getChildren()) {
                     Markers marker = child.getValue(Markers.class);
+
+                    String getSnippet = marker.getSnippet();
+                    String[] splitArray = getSnippet.split("\n");
+
                     LatLng latLng = new LatLng(marker.getLatitude(), marker.getLongitude());
                     client = LocationServices.getFusedLocationProviderClient(getContext());
                     if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -123,7 +127,8 @@ public class MapFragmentDesign extends Fragment {
                                 @Override
                                 public void onMapReady(GoogleMap googleMap) {
                                     Log.i("GetFrom", "ok");
-                                    Marker newProblem = googleMap.addMarker(new MarkerOptions().position(latLng).title(marker.getId()).snippet(marker.getSnippet()));
+
+                                    Marker newProblem = googleMap.addMarker(new MarkerOptions().position(latLng).snippet(splitArray[1]));
 
                                     googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                                         @Override
@@ -281,12 +286,18 @@ public class MapFragmentDesign extends Fragment {
         AlertDialog.Builder window = new AlertDialog.Builder(getContext());
         window.setTitle("Информация о метке");
 
+        String getSnippet = marker.getSnippet();
+        String[] splitArray = getSnippet.split("\n");
+
+        for (String s: splitArray)
+            Log.i("pppppp", s);
+
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View showMarkerInfoWindowUser = inflater.inflate(R.layout.show_marker_info_window_user, null);
         window.setView(showMarkerInfoWindowUser);
 
         MaterialTextView markerInfo = showMarkerInfoWindowUser.findViewById(R.id.markerInfo);
-        markerInfo.setText(marker.getSnippet());
+        markerInfo.setText(splitArray[1]);
 
         window.setNegativeButton("Закрыть", new DialogInterface.OnClickListener() {
             @Override
@@ -301,6 +312,9 @@ public class MapFragmentDesign extends Fragment {
     private void showMarkerInfoWindowAdmin(Marker marker) {
         AlertDialog.Builder window = new AlertDialog.Builder(getContext());
         window.setTitle("Информация о метке");
+
+        String getSnippet = marker.getSnippet();
+        String[] splitArray = getSnippet.split("\n");
 
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View showMarkerInfoWindowAdmin = inflater.inflate(R.layout.show_marker_info_window_admin, null);
@@ -333,14 +347,20 @@ public class MapFragmentDesign extends Fragment {
                                 }
                             });*/
 
-                    mDataBase.child("markers").child(marker.getTitle()).removeValue();
+                    String getSnippet = marker.getSnippet();
+                    String[] splitArray = getSnippet.split("\n");
+
+                    mDataBase.child("markers").child(splitArray[0]).removeValue();
                     ((NavigationHost) getActivity()).navigateTo(new MainPageFragment(), false);
                 }
             }
         });
 
         MaterialTextView markerInfo = showMarkerInfoWindowAdmin.findViewById(R.id.markerInfo);
-        markerInfo.setText(marker.getSnippet());
+        markerInfo.setText(splitArray[1]);
+
+        MaterialTextView emailInfo = showMarkerInfoWindowAdmin.findViewById(R.id.emailInfo);
+        emailInfo.setText("Автор: "+splitArray[2]);
 
         window.setNegativeButton("Закрыть", new DialogInterface.OnClickListener() {
             @Override
@@ -420,7 +440,6 @@ public class MapFragmentDesign extends Fragment {
 
                     String inputMessage = message.getText().toString();
 
-                    marker.setSnippet(inputMessage);
                     marker.setAlpha(1.0f);
 
                     /*String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZqwertyuiopasdfghjklzxcvbnm1234567890";
@@ -439,8 +458,9 @@ public class MapFragmentDesign extends Fragment {
                     DatabaseReference ref = mDataBase.child("markers").push();
                     String pathKey = ref.getKey();
                     marker.setTitle(pathKey);
+                    marker.setSnippet(pathKey+"\n"+inputMessage+"\n"+mAuth.getCurrentUser().getEmail());
                     ref.setValue(new Markers(
-                            inputMessage,
+                            marker.getSnippet(),
                             marker.getPosition().latitude,
                             marker.getPosition().longitude,
                             type,

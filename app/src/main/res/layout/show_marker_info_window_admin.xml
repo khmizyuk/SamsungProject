@@ -11,7 +11,6 @@
         android:layout_height="wrap_content"
         android:text="@string/top_title"
         android:textSize="20dp"
-        android:textStyle="bold"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="10dp"/>
@@ -27,12 +26,21 @@
         android:layout_marginTop="10dp"/>
 
     <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/emailInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="15dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"/>
+
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/deleteTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/delete_marker_title"
         android:textSize="20dp"
-        android:textStyle="bold"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="10dp"/>

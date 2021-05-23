@@ -23,12 +23,12 @@ public class FirstTitleFragment extends Fragment{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
+        /*OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
                 ((NavigationHost) getActivity()).navigateMenu(new ArticlesFragment(), false);
             }
-        };
+        };*/
     }
 
     @Override
