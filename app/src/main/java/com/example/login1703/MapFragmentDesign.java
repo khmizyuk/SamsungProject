@@ -66,8 +66,6 @@ public class MapFragmentDesign extends Fragment {
 
     private DatabaseReference mDataBase;
 
-    Marker currentMarker;
-
     boolean selectButton = false;
 
     String type = "";
@@ -112,8 +110,6 @@ public class MapFragmentDesign extends Fragment {
 
                     String getSnippet = marker.getSnippet();
                     String[] splitArray = getSnippet.split("\n");
-                    //for (String s: splitArray)
-                        //Log.i("pppppp", "splitArrayFor: "+s);
 
                     LatLng latLng = new LatLng(marker.getLatitude(), marker.getLongitude());
                     client = LocationServices.getFusedLocationProviderClient(getContext());
@@ -135,8 +131,6 @@ public class MapFragmentDesign extends Fragment {
                                     googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                                         @Override
                                         public boolean onMarkerClick(Marker marker) {
-                                            //marker.showInfoWindow();
-                                            //marker.hideInfoWindow();
 
                                             FirebaseUser user = mAuth.getCurrentUser();
 
@@ -173,50 +167,6 @@ public class MapFragmentDesign extends Fragment {
             }
         });
 
-        /*mDataBase.child("markers").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                //if (dataSnapshot==null) return;
-                for (DataSnapshot postSnapShot: dataSnapshot.getChildren()) {
-
-                    mDataBase.child("markers").child(postSnapShot.getKey()).get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
-                        @Override
-                        public void onSuccess(DataSnapshot dataSnapshot) {
-                            Markers marker = dataSnapshot.getValue(Markers.class);
-                            LatLng latLng = new LatLng(marker.getLatitude(), marker.getLongitude());
-                            client = LocationServices.getFusedLocationProviderClient(getContext());
-                            if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                                return;
-                            }
-                            Task<Location> task = client.getLastLocation();
-                            task.addOnSuccessListener(new OnSuccessListener<Location>() {
-                                @Override
-                                public void onSuccess(Location location) {
-                                    supportMapFragment.getMapAsync(new OnMapReadyCallback() {
-                                        @Override
-                                        public void onMapReady(GoogleMap googleMap) {
-                                            Marker newProblem = googleMap.addMarker(new MarkerOptions().position(latLng).title(marker.getId()).snippet(marker.getSnippet()));
-                                        }
-                                    });
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull @NotNull Exception e) {
-                                    Log.i()
-                                }
-                            });
-                        }
-                    });
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.i("GetFromDatabase", databaseError.toString());
-            }
-        });*/
-
         nextButton = view.findViewById(R.id.apply_button);
         cancelButton = view.findViewById(R.id.cancel_button);
         floatingButton = view.findViewById(R.id.floating_action_button);
@@ -240,15 +190,11 @@ public class MapFragmentDesign extends Fragment {
                             @Override
                             public void onMapReady(GoogleMap googleMap) {
 
-
-
                                 LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
                                 double currentLatitude = location.getLatitude();
                                 double currentLongitude = location.getLongitude();
-                                //MarkerOptions newProblem = new MarkerOptions().position(latLng);//.icon(BitmapDescriptorFactory.fromResource(R.drawable.icon));
                                 Marker newProblem = googleMap.addMarker(new MarkerOptions().position(latLng).alpha(0.5f));
                                 googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
-                                //googleMap.addMarker(newProblem);
 
                                 cancelButton.setOnClickListener(new View.OnClickListener() {
                                     @Override
@@ -268,7 +214,6 @@ public class MapFragmentDesign extends Fragment {
                                         floatingButton.setVisibility(View.INVISIBLE);
                                         newProblem.setDraggable(false);
 
-                                        //показ всплывающего окна
                                         showAddProblemWindow(newProblem, currentLatitude, currentLongitude);
                                     }
                                 });
@@ -332,23 +277,6 @@ public class MapFragmentDesign extends Fragment {
             public void onClick(View v) {
                 if (checkBox1.isChecked() && checkBox2.isChecked()) {
                     marker.remove();
-                    //TODO delete
-
-                    /*FirebaseDatabase.getInstance().getReference().orderByChild("id").equalTo(marker.getTitle()).addListenerForSingleValueEvent(
-                            new ValueEventListener() {
-                                @Override
-                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                    for (DataSnapshot child: dataSnapshot.getChildren()) {
-                                        child.getRef().removeValue();
-
-                                    }
-                                }
-
-                                @Override
-                                public void onCancelled(DatabaseError databaseError) {
-                                    Log.w("TodoApp", "getUser:onCancelled", databaseError.toException());
-                                }
-                            });*/
 
                     String getSnippet = marker.getSnippet();
                     String[] splitArray = getSnippet.split("\n");
@@ -446,19 +374,6 @@ public class MapFragmentDesign extends Fragment {
 
                     marker.setAlpha(1.0f);
 
-                    /*String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZqwertyuiopasdfghjklzxcvbnm1234567890";
-                    int length = 10;
-                    Random random = new Random();
-                    StringBuilder id = new StringBuilder(length);
-                    for (int n=0; n<4; n++) {
-                        for (int i = 0; i < length; i++)
-                            id.append(characters.charAt(random.nextInt(characters.length())));
-                        id.append("-");
-                    }
-                    id.delete(id.length()-1,id.length());*/
-
-                    //String pythKey = FirebaseDatabase.getInstance().getReference().child("markers").push().getKey();
-
                     DatabaseReference ref = mDataBase.child("markers").push();
                     String pathKey = ref.getKey();
                     marker.setTitle(pathKey);
@@ -483,48 +398,6 @@ public class MapFragmentDesign extends Fragment {
 
                     ((NavigationHost) getActivity()).navigateTo(new MainPageFragment(), false);
 
-                    /*mDataBase.child("markers").push().setValue(
-                            new Markers(
-                                    inputMessage,
-                                    marker.getPosition().latitude,
-                                    marker.getPosition().longitude,
-                                    type,
-                                    marker.getTitle()
-                            )
-                    ).addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void unused) {
-                            Log.d(TAG, "addMarkerToDatabase:success");
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull @NotNull Exception e) {
-                            Log.d(TAG, "addMarkerToDatabase:failure. "+e);
-                        }
-                    });*/
-
-                    /*FirebaseDatabase.getInstance().getReference().child(pythKey).setValue(
-                            new Markers(
-                                    inputMessage,
-                                    marker.getPosition().latitude,
-                                    marker.getPosition().longitude,
-                                    type,
-                                    marker.getTitle()
-                            )
-                    );*/
-
-                    /*FirebaseDatabase.getInstance().getReference().orderByChild("id").equalTo(marker.getTitle()).addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
-                        }
-                    });*/
-
                     dialog.dismiss();
 
                     selectButton = false;
@@ -548,9 +421,7 @@ public class MapFragmentDesign extends Fragment {
                         @Override
                         public void onMapReady(GoogleMap googleMap) {
                             LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-                            //MarkerOptions options = new MarkerOptions().position(latLng).title("САЛАМ").draggable(true);//.icon(BitmapDescriptorFactory.fromResource(R.drawable.icon));
                             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
-                            //googleMap.addMarker((options));
                         }
                     });
                 }
@@ -565,48 +436,4 @@ public class MapFragmentDesign extends Fragment {
             getCurrentLocation();
         }
     }
-
-    /*@Override
-    public void onLocationChanged(@NonNull Location location) {
-        LatLng startPosition = new LatLng(location.getLatitude(), location.getLongitude());;
-        if (currentMarker==null){
-            Marker newProblem = googleMap.addMarker(new MarkerOptions()
-                    .position(latLng)
-                    .draggable(false));
-        }
-    }*/
-
-    /*private void addPostEventListener(DatabaseReference mPostReference) {
-        client = LocationServices.getFusedLocationProviderClient(getContext());
-        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        Task<Location> task = client.getLastLocation();
-        task.addOnSuccessListener(new OnSuccessListener<Location>() {
-            @Override
-            public void onSuccess(Location location) {
-                supportMapFragment.getMapAsync(new OnMapReadyCallback() {
-                    @Override
-                    public void onMapReady(GoogleMap googleMap) {
-                        ValueEventListener postListener = new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                // Get Markers object and use the values to update the UI
-                                Markers markerForCreate = dataSnapshot.getValue(Markers.class);
-                                LatLng latLng = new LatLng(markerForCreate.getLatitude(), markerForCreate.getLongitude());
-                                Marker marker = googleMap.addMarker(new MarkerOptions().position(latLng).snippet(markerForCreate.getSnippet()).title(markerForCreate.getId()));
-                            }
-
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-                                // Getting Post failed, log a message
-                                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
-                            }
-                        };
-                        mPostReference.addValueEventListener(postListener);
-                    }
-                });
-            }
-        });
-    }*/
 }

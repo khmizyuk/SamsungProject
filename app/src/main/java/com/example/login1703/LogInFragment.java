@@ -130,21 +130,6 @@ public class LogInFragment extends Fragment {
                         hideProgressBar();
                     }
                 });
-
-        /*mAuth.signInWithEmailAndPassword(email, password)
-                .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                    @Override
-                    public void onSuccess(AuthResult authResult) {
-                        Log.d(TAG, "signInWithEmail:success");
-                        ((NavigationHost) getActivity()).navigateTo(new MainPageFragment(), false);
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull @NotNull Exception e) {
-                Snackbar.make(container, "Authentication failed. "+e.getMessage(), Snackbar.LENGTH_SHORT).show();
-            }
-        });*/
     }
 
     @VisibleForTesting
@@ -185,10 +170,5 @@ public class LogInFragment extends Fragment {
         super.onStop();
         hideProgressBar();
     }
-
-    /*private boolean isPasswordValid(@NonNull String checkEmail, @NonNull String checkPassword) {
-        //return (checkEmail.equals(CORRECT_EMAIL)) && (checkPassword.equals(CORRECT_PASSWORD));
-        return true;
-    }*/
 }
 

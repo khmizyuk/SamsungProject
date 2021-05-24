@@ -37,9 +37,7 @@ public class SignInFragment extends Fragment {
 
     private static final String TAG = "EmailPassword";
     private FirebaseAuth mAuth;
-    //private FirebaseDatabase mDataBase;
     private DatabaseReference mDataBase;
-    private DatabaseReference users;
 
     String email, password, firstName, lastName;
 
@@ -132,34 +130,6 @@ public class SignInFragment extends Fragment {
                                 }
                             });
 
-                            /*User newUser = new User();
-                            newUser.setEmail(email);
-                            newUser.setLastName(lastName);
-                            newUser.setFirstName(firstName);
-                            newUser.setId(FirebaseAuth.getInstance().getCurrentUser().getUid());
-
-                            users.push().setValue(newUser);
-
-                            mDataBase.child("markers").child(FirebaseAuth.getInstance().getUid()).setValue(
-                                    new User(
-                                            firstName,
-                                            lastName,
-                                            FirebaseAuth.getInstance().getCurrentUser().getEmail(),
-                                            FirebaseAuth.getInstance().getCurrentUser().getUid(),
-                                            0
-                                    )
-                            ).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void unused) {
-                                    Log.d(TAG, "addUserToDatabase:success");
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull @NotNull Exception e) {
-                                    Log.d(TAG, "addUserToDatabase:failure."+e);
-                                }
-                            });*/
-
                         } else {
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
                             Toast.makeText(getContext(), "Authentication failed " + task.getException(),
@@ -170,84 +140,9 @@ public class SignInFragment extends Fragment {
                     }
                 });
 
-        /*mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                    @Override
-                    public void onSuccess(AuthResult authResult) {
-                        User user = new User();
-                        user.setEmail(email);
-                        user.setPassword(password);
-                        user.setFirstName(firstName);
-                        user.setLastName(lastName);
-                        user.setCountOfMarkers(0);
-
-                        users.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                .setValue(user)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void unused) {
-                                Log.d(TAG, "createUserWithEmail:success");
-                                Snackbar.make(container, "Your account is created.", Snackbar.LENGTH_SHORT).show();
-
-                                ((NavigationHost) getActivity()).navigateTo(new MainPageFragment(), false);
-
-                                hideProgressBar();
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull @NotNull Exception e) {
-                                Snackbar.make(container, "Your account was not created.", Snackbar.LENGTH_SHORT).show();
-                                Log.w(TAG, "createUserWithEmail:failure");
-                            }
-                        });
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull @NotNull Exception e) {
-                Snackbar.make(container, "Creating problem...", Snackbar.LENGTH_SHORT).show();
-            }
-        });*/
-
-        /*mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(requireActivity(), new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            User user = new User();
-                            user.setEmail(email);
-                            user.setFirstName(firstName);
-                            user.setLastName(lastName);
-                            user.setCountOfMarkers(0);
-
-                            users.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                    .setValue(user)
-                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull @NotNull Task<Void> task) {
-                                            if (task.isSuccessful()) {
-                                                Snackbar.make(container, "Your account is created.", Snackbar.LENGTH_SHORT).show();
-
-                                                ((NavigationHost) getActivity()).navigateTo(new MainPageFragment(), false);
-
-                                                hideProgressBar();
-                                            }
-                                            else {
-                                                Toast.makeText(getContext(), "Authentication failed " + task.getException(),
-                                                        Toast.LENGTH_SHORT).show();}
-                                        }
-                                    });
-                        } else {
-                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(getContext(), "Authentication failed " + task.getException(),
-                                    Toast.LENGTH_SHORT).show();
-                            hideProgressBar();
-                        }
-
-                        hideProgressBar();
-                    }
-                });*/
     }
 
+    //todo email verification
     private void sendEmailVerification() {
 
         final FirebaseUser user = mAuth.getCurrentUser();

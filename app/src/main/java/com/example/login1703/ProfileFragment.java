@@ -31,9 +31,6 @@ public class ProfileFragment extends Fragment {
     private FirebaseAuth mAuth;
     private DatabaseReference mDataBase;
 
-    private TextView firstNameField;
-    private TextView lastNameField;
-
     private String firstname, lastname;
 
     @Override
@@ -75,7 +72,6 @@ public class ProfileFragment extends Fragment {
         MaterialTextView lastnameField = view.findViewById(R.id.lastname);
         lastnameField.setText(lastname);
 
-        MaterialButton logOutButton = view.findViewById(R.id.log_out);
         ImageView logOutImage = view.findViewById(R.id.log_out_image);
 
         logOutImage.setOnClickListener(new View.OnClickListener() {
