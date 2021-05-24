@@ -30,6 +30,6 @@ NewsMap – мобильное приложение, в котором вы см
 
 •	нажать кнопку "Добавить метку".
 
-![alt tag](https://github.com/khmizyuk/SamsungProject/blob/master/app/src/main/res/drawable/photo_2021-05-24_15-53-44.jpg)​
+![alt tag](https://github.com/khmizyuk/SamsungProject/blob/master/app/src/main/res/drawable/photo_2021_05_24_15_53_44.jpg)​
 
 Для создания маркера все поля должны быть заполнены.
